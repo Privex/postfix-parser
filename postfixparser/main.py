@@ -100,6 +100,8 @@ async def main():
     log.info('Generating async batch save list')
     save_list = []
     for m in msg_list:
+        if m.get('mail_from') in settings.ignore_domains:
+            continue
         save_list.append(save_obj('sent_mail', m, primary="id", onconflict=OnConflict.UPDATE))
     log.info('Firing off asyncio.gather(save_list)...')
     await asyncio.gather(*save_list)

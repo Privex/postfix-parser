@@ -18,7 +18,7 @@ Copyright::
 import pytz
 from os import getenv as env
 from dotenv import load_dotenv
-from privex.helpers import env_bool
+from privex.helpers import env_bool, env_csv
 
 load_dotenv()
 
@@ -47,3 +47,4 @@ log_timezone = pytz.timezone(env('LOG_TIMEZONE', 'UTC'))
 If your mail.log isn't in UTC, set the LOG_TIMEZONE env var to a pytz compatible timezone
 """
 
+ignore_domains = env_csv('IGNORE_DOMAINS', ['localhost', '127.0.0.1'])
