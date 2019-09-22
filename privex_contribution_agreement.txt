@@ -1,0 +1,90 @@
+Legal agreement for contributions made to projects owned/created by Privex Inc.
+Revision: 1.0
+Revision date: 2019-03-12
+---------------------------
+ * Contribution - Content such as code (additions/changes to application source code), 
+                  documentation (such as the README), media (images, music, video), 
+                  and ideas sent to Privex with the intention of the content being included
+                  within a project that Privex has created, or owns.
+
+ * Privex / Privex Inc. - Refers to the corporate entity Privex Inc. registered in Belize City, Belize
+                          and may also include persons employed by Privex Inc.
+                          Official website: https://www.privex.io
+ 
+ * Core Project - Refers to content within the project that is being contributed to, which
+                  Privex has created, or holds ownership rights to (e.g. contributed content
+                  that paragraph 2.1 applies to)
+
+SECTION 1 - Contributions to Open Source projects
+
+1.1     By contributing to open source projects created by Privex Inc., you agree that your 
+        contributions will become licensed under the same license as the project, and may be used 
+        within the scope of that license.
+
+SECTION 2 - Contributions to any Privex owned/created project
+
+2.1     By submitting a contribution to a Privex project, you grant unlimited usage rights
+        of included content which you have created, or have ownership rights of, to Privex Inc.
+        unless the content has been exempted by paragraph 2.2.
+
+        This includes, but is not limited to, the right for Privex Inc. to use, 
+        modify, re-license, re-distribute, and/or sell the content.
+        
+        This does not affect your existing rights to the content. You still retain any prior
+        ownership of the submitted content.
+
+        Privex does not claim unlimited usage rights on any file with a clearly visible license 
+        contained within the file, nor the content of folders which contain a license file such
+        as LICENSE, LICENSE.TXT, LICENCE etc.
+
+        
+2.1.1   (PLAIN ENGLISH) While the above paragraph sounds scary, it's a necessary legal
+        protection. 
+        
+        Many of our open source projects are actively used by Privex, and sometimes
+        used as components of other projects, which may not fall under the same license
+        as the project you're contributing to. 
+        
+        To ensure we don't get into any licensing issues because we accepted your contribution,
+        we need to ensure that any contributions submitted to **our repo** are fully licensed
+        to us, so that we can continue using our own project legally.
+
+
+
+2.2     The following sub-paragraphs detail exemptions of contributions from paragraph 2.2
+
+2.2.1   If you are submitting content which you have created and/or own, and require that parts of, 
+        or all of your contribution to be exempted from paragraph 2.1, you must follow ALL of the below 
+        requirements before submitting your contribution:
+        
+        1. Submit the affected content as individual files, or using a reference (e.g. a 
+           link to the file(s) on a website)
+        2. Ensure that the license of the content is made clearly visible through one
+           or more of the following methods:
+            1. Within the affected file(s) (e.g. a code comment)
+            2. If affected content is submitted within a new folder, which contains only
+                files that are under the same license (or set of licenses), then the
+                license may be placed in a clearly named license file, such as `LICENSE`.
+            3. A notice displayed within the README and/or LICENSE file of the project
+                which the content is being contributed to, clearly stating the files
+                that are unaffected by paragraph 2.1
+        3. Ensure that you clearly state in the contribution request (e.g. git pull requests
+           / issues), that the contribution contains content that does not fall under 
+           paragraph 2.1. You should reference the files/folders that are exempt.
+           
+           Example: "This pull request includes content that is exempt from paragraph 2.1
+           of the Privex contribution legal agreement, see the folder `lib/libexample`"
+           
+           Example: "I retain my ownership rights for the files `abc.py` and `myfile.sh`,
+           I have included the appropriate license/copyright text at the start of the files."
+
+2.2.2   If you are submitting third-party content which falls under an existing license, including 
+        content under the same license as the project, you must:
+        
+        1. Follow requirements 1 (individual files or links) and 2 (clear license) of paragraph 2.2.1
+        2. If it is not clear from the names of the submitted files/folders that the content is
+           not part of the Base Project (content owned by Privex), you must ensure that you clearly 
+           state in the contribution request (e.g. git pull requests / issues) the files and/or folders
+           which are licensed separately.
+
+2.3     Privex may decline a contribution for any reason it chooses. 

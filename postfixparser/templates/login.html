@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+    <div class="ui segment form">
+        <form action="/login" method="post">
+
+            <h3>This page is protected. Please enter the password.</h3>
+
+            <input type="password" class="ui input" name="password"/>
+
+            <button class="ui button primary">Log In</button>
+        </form>
+    </div>
+
+{% endblock %}

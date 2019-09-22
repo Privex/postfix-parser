@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div id="app">
+    <div class="ui segment">
+        <div class="ui labeled fluid input">
+            <input v-model="search" type="text" class="ui input" placeholder="Search Emails"/>
+            <select name="searchby-email" id="searchby-email" v-model="search_by" class="dropdown">
+                <option value="id">Queue ID</option>
+                <option value="mail_from">From Address</option>
+                <option value="mail_to">To Address</option>
+                <option value="timestamp__lt">Older Than</option>
+                <option value="timestamp__gt">Newer Than</option>
+            </select>
+            <select name="filter-email" id="filter-email" v-model="status_filter" class="dropdown">
+                <option value="NOFILTER">No Status Filter</option>
+                <option value="sent">Successfully Sent</option>
+                <option value="bounced">Bounced</option>
+                <option value="deferred">Delayed (deferred)</option>
+            </select>
+            <a href="/logout"><button class="ui button red">Log Out</button></a>
+        </div>
+    </div>
+    <div v-if="loading" class="ui active inverted dimmer">
+        <div class="ui text loader">
+            Loading emails...
+        </div>
+    </div>
+    <table class="ui table" v-if="!loading">
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>Queue ID</th>
+                <th>Status</th>
+                <th>From</th>
+                <th>To</th>
+                <th>First Attempt</th>
+                <th>Last Attempt</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% raw %}
+            <tr v-for="m in emails">
+                <td>{{ m.timestamp }}</td>
+                <td>{{ m.id }}</td>
+                <td>{{ m.status.code }}</td>
+                <td>{{ m.mail_from }}</td>
+                <td>{{ m.mail_to }}</td>
+                <td>{{ m.first_attempt }}</td>
+                <td>{{ m.last_attempt }}</td>
+            </tr>
+
+            {% endraw %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+    <script src="https://cdn.privex.io/lib/underscorejs/1.9.1/underscore-min.js"
+            integrity="sha384-5DWzr9S4agqS3WKvPrhFKJagpYyHOBsf3/DxuDKORyqCv2sYer9c/ExdhPOL8CGh"
+            crossorigin="anonymous"></script>
+
+    {% if VUE_DEBUG %}
+        <script src="https://cdn.privex.io/lib/vue/2.6.10/vue.js"></script>
+    {% else %}
+        <script src="https://cdn.privex.io/lib/vue/2.6.10/vue.min.js"
+            integrity="sha384-8t+aLluUVnn5SPPG/NbeZCH6TWIvaXIm/gDbutRvtEeElzxxWaZN+G/ZIEdI/f+y"
+            crossorigin="anonymous"></script>
+    {% endif %}
+
+    <script>
+
+    const base_url = '/api/emails';
+
+    Vue.config.devtools = true;
+
+    let app = new Vue({
+        el: '#app',
+        data: {
+            loading: true,
+            emails: [],
+            search: "",
+            search_by: "id",
+            status_filter: "NOFILTER"
+        },
+        computed: {
+            email_filter() {
+                let d = {};
+
+                if (this.search !== "") {
+                    d[this.search_by] = this.search;
+                }
+                if (this.status_filter !== "NOFILTER") {
+                    d['status.code'] = this.status_filter;
+                }
+                return d;
+            }
+        },
+        watch: {
+            search(val) {
+                this.debounce_emails();
+            },
+            search_by(val) {
+                if(this.search !== "") {
+                    this.debounce_emails();
+                }
+            },
+            status_filter(val) {
+                this.debounce_emails();
+            }
+        },
+        methods: {
+            loadEmails() {
+                this.loading = true;
+                var url = base_url, queries = 0;
+
+                for (var f in this.email_filter) {
+                    url += (queries === 0) ? '?' : '&';
+                    url += `${f}=${this.email_filter[f]}`;
+                }
+                return fetch(url).then(function(response) {
+                    return response.json();
+                }).then((res) => {
+                    this.emails = res;
+                    this.loading = false;
+                });
+            },
+            formatDate(date) {
+                let d = new Date(date);
+                let newdate = `${d.toLocaleString()}`
+            }
+        },
+        mounted() {
+            this.loadEmails();
+            this.debounce_emails = _.debounce(this.loadEmails, 1000);
+            $('select.dropdown').dropdown();
+        }
+    })
+
+
+    </script>
+{% endblock %}

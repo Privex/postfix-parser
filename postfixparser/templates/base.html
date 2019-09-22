@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Privex SMTP Mail Info</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.privex.io/lib/semanticui/2.4.2/semantic.min.css"
+          integrity="sha384-JKIDqM48bt14NZpzl9v0AP36VK2C/X6RuSPfimxpoWdSANUXblZUX1cgdQw8cZUK" crossorigin="anonymous"/>
+    <style>
+        .main {
+            margin-top: 1em;
+        }
+        @media only screen and (min-width: 1200px) {
+            .ui.fluid.main.container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="ui main fluid container">
+        {% with messages = get_flashed_messages(True) %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="ui message {{ message[0] }}">{{ message[1] }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+        <div class="ui segment" id="footer">
+            &copy; 2019 Privex Inc. --- Released under the GNU AGPL v3 ---
+            <a href="https://github.com/Privex/postfix-parser" target="_BLANK">View source on Github</a>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.privex.io/lib/jquery/3.3.1/jquery.min.js"
+            integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.privex.io/lib/semanticui/2.4.2/semantic.min.js"
+            integrity="sha384-yvMKoOb78htxD1Bp6oo2tsnFh4lwwz+621kAp2m8YeFkSe9CM2+N1coOvw4R0uwt"
+            crossorigin="anonymous"></script>
+
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>

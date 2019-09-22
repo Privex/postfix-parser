@@ -1,0 +1,74 @@
+#####
+#
+# Systemd Service file for `privex/steem-balancer`
+#
+# To use this file, copy it into /etc/systemd/system/steem-balancer.service , replace `stmbal` with the username of the Linux
+# account it was installed into, and adjust the paths if necessary.
+#
+# Once adjusted for your specific installation, run the following:
+#
+#    systemctl enable steem-balancer.service
+#    systemctl start steem-balancer.service
+#
+# steem-balancer will now have started in the background as a systemd service, and will automatically start on reboot
+#
+#####
+[Unit]
+Description=Privex Postfix Log Parser - Web UI
+After=network.target
+
+[Service]
+Type=simple
+User=mailparser
+
+WorkingDirectory=/home/mailparser/postfix-parser/
+EnvironmentFile=/home/mailparser/postfix-parser/.env
+
+ExecStart=/home/mailparser/postfix-parser/run.sh prod
+
+Restart=always
+Environment=PYTHONUNBUFFERED=0
+RestartSec=30
+StandardOutput=syslog
+
+# Hardening measures
+####################
+
+# Provide a private /tmp and /var/tmp.
+PrivateTmp=true
+
+# Mount /usr, /boot/ and /etc read-only for the process.
+ProtectSystem=full
+
+# Disallow the process and all of its children to gain
+# new privileges through execve().
+NoNewPrivileges=true
+
+# Use a new /dev namespace only populated with API pseudo devices
+# such as /dev/null, /dev/zero and /dev/random.
+PrivateDevices=true
+
+# Deny the creation of writable and executable memory mappings.
+MemoryDenyWriteExecute=true
+
+[Install]
+WantedBy=multi-user.target
+Alias=postfixparser.service
+
+#####
+# +===================================================+
+# |                 © 2019 Privex Inc.                |
+# |               https://www.privex.io               |
+# +===================================================+
+# |                                                   |
+# |        Postfix Log Parser / Web UI                |
+# |        License: GNU AGPL v3                       |
+# |                                                   |
+# |        https://github.com/Privex/postfix-parser   |
+# |                                                   |
+# |        Core Developer(s):                         |
+# |                                                   |
+# |          (+)  Chris (@someguy123) [Privex]        |
+# |                                                   |
+# +===================================================+
+#####
