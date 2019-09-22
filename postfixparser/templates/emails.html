@@ -48,13 +48,82 @@
                 <td>{{ m.mail_to }}</td>
                 <td>{{ m.first_attempt }}</td>
                 <td>{{ m.last_attempt }}</td>
+                <td><button @click="show_modal(m)" class="ui button primary">Show</button></td>
             </tr>
 
             {% endraw %}
         </tbody>
     </table>
 
+    {% raw %}
+
+    <div class="ui modal" id="mail-modal">
+        <i class="close icon"></i>
+        <div class="header" v-if="msg.id">
+            Email {{ msg.id }}
+        </div>
+        <div class="content" v-if="msg.id">
+            <h3>Email Metadata</h3>
+            <table class="ui definition table" id="email-metadata">
+                <tbody>
+                    <tr>
+                        <td>Timestamp</td>
+                        <td>{{ msg.timestamp }}</td>
+                    </tr>
+                    <tr>
+                        <td>Queue ID</td>
+                        <td>{{ msg.id }}</td>
+                    </tr>
+                    <tr>
+                        <td>Message ID</td>
+                        <td>{{ msg.message_id }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>From Address:</td>
+                        <td>{{ msg.mail_from }}</td>
+                    </tr>
+                    <tr>
+                        <td>To Address:</td>
+                        <td>{{ msg.mail_to }}</td>
+                    </tr>
+                    <tr>
+                        <td>Full Status</td>
+                        <td class="max-70">
+                            <strong>Code:</strong> {{ msg.status.code }} <br/>
+                            <strong>Message:</strong><br/>
+                            <code>{{ msg.status.message }}</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Client</td>
+                        <td>
+                            <strong>Host:</strong> {{ msg.client.host }} <br/>
+                            <strong>IP:</strong> {{ msg.client.ip }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Relay (Dest. SMTP server)</td>
+                        <td>
+                            <strong>Host:</strong> {{ msg.relay.host }} <br/>
+                            <strong>IP:</strong> {{ msg.relay.ip }} (port {{ msg.relay.port }})
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3>Related Log Lines</h3>
+
+            <ul>
+                <li v-for="l in msg.lines">[{{ l.timestamp }}] {{ l.queue_id }} {{ l.message }}</li>
+            </ul>
+
+        </div>
+    </div>
+    {% endraw %}
+
 </div>
+
+
 
 {% endblock %}
 
@@ -85,7 +154,8 @@
             emails: [],
             search: "",
             search_by: "id",
-            status_filter: "NOFILTER"
+            status_filter: "NOFILTER",
+            msg: {}
         },
         computed: {
             email_filter() {
@@ -132,6 +202,10 @@
             formatDate(date) {
                 let d = new Date(date);
                 let newdate = `${d.toLocaleString()}`
+            },
+            show_modal(m) {
+                this.msg = m;
+                $('#mail-modal').modal('show');
             }
         },
         mounted() {
