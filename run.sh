@@ -20,6 +20,8 @@ else
     MAGENTA="" CYAN="" WHITE="" RESET=""
 fi
 
+export PATH="${HOME}/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:${PATH}"
+
 # easy coloured messages function
 # written by @someguy123
 function msg () {
