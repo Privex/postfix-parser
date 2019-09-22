@@ -19,6 +19,7 @@ RethinkDB server.
 
 ![Screenshot of Log View Web UI](https://cdn.privex.io/github/postfix-parser/postfix-parser.png)
 
+![Screenshot of Email Show Modal](https://cdn.privex.io/github/postfix-parser/postfix-parser-modal.png)
 
 Install
 ========
