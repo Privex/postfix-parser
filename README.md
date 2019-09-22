@@ -17,7 +17,7 @@ parsed data is kept in RethinkDB - thus you can run the WebUI on a separate serv
 RethinkDB server.
 
 
-![Screenshot of Log View Web UI](https://cdn.privex.io/github/postfix-parser/postfix-parser.png)
+![Screenshot of Log View Web UI](https://cdn.privex.io/github/postfix-parser/postfix-parser.png?2)
 
 ![Screenshot of Email Show Modal](https://cdn.privex.io/github/postfix-parser/postfix-parser-modal.png)
 
