@@ -191,6 +191,7 @@
                 for (var f in this.email_filter) {
                     url += (queries === 0) ? '?' : '&';
                     url += `${f}=${this.email_filter[f]}`;
+                    queries += 1;
                 }
                 return fetch(url).then(function(response) {
                     return response.json();
