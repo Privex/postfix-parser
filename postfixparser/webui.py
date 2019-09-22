@@ -122,7 +122,7 @@ async def api_emails():
     r_q: rethinkdb.query
 
     frm = dict(request.args)
-    order_by, order_dir = 'timestamp', 'asc'
+    order_by, order_dir = 'last_attempt', 'desc'
 
     _sm = r.table('sent_mail')
 

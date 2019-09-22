@@ -63,7 +63,7 @@ crontab -e
 # DEVELOPMENT
 ####
 
-./run.sh runserver   # Run the development server with automatic restart on edits
+./run.sh dev         # Run the development server with automatic restart on edits
 ./run.sh parse       # Import MAIL_LOG immediately
 
 ####
