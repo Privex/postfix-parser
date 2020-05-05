@@ -29,10 +29,10 @@ from postfixparser.parser import parse_line
 log = logging.getLogger(__name__)
 
 
-_match = r'([A-Za-z]+ [0-9]+ [0-9]+\:[0-9]+:[0-9]+).*'
+_match = r'([A-Za-z]+[ \t]+[0-9]+[ \t]+[0-9]+\:[0-9]+:[0-9]+).*'
 """(0) Regex to match the Date/Time at the start of each log line"""
 
-_match += r'([A-F0-9]{10})\: ?(.*)'
+_match += r'([A-F0-9]{10})\:[ \t]+?(.*)'
 """Regex to match the (1) Queue ID and the (2) Log Message"""
 
 match = re.compile(_match)
