@@ -197,7 +197,7 @@ async def _paginate_query(query: QueryOrTable, frm: Mapping, rt_conn: DefaultCon
     # if order_by in dict(settings.rethink_tables)['sent_mail']:
     #     _sm = _sm.order_by(index=r_order)
     # else:
-    query = query.skip(offset).limit(limit).order_by(r_order)
+    query = query.order_by(r_order).skip(offset).limit(limit)
     return query, res
 
 
