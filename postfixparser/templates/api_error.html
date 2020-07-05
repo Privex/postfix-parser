@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+    <h4 class="ui red">An unexpected error has occurred!</h4>
+
+    {% if status_code %}<h5>HTTP Status Code: {{ status_code }}</h5>{% endif %}
+    {% if error_code %}<h5>Error Code: {{ error_code }}</h5>{% endif %}
+    {% if error_msg %}<p><strong>Error Message:</strong> {{ error_msg }}</p>{% endif %}
+
+    <div class="ui divider"></div>
+
+    {% if description %}
+        <p>{{ description|safe }}</p>
+    {% else %}
+        <p>
+            The error handler did not provide a more in-depth explanation for why this error occurred or how to deal
+            with it.
+        </p>
+        <p><strong>If problems persist, please contact the operator of this domain.</strong></p>
+    {% endif %}
+    <div class="ui divider"></div>
+
+    <p>
+        This server is running an instance of
+        <a href="https://github.com/Privex/postfix-parser">Privex's Postfix Parser</a>,
+        a Python application which is designed to parse the log output of the Postfix SMTP server (usually
+        <code>/var/log/mail.log</code>), and convert it into easily queryable data inside of
+        <a href="https://rethinkdb.com/" target="_blank">RethinkDB</a>
+    </p>
+
+    {% if debug %}
+        {% if exc_name %}<p><strong>Exception Name:</strong> {{ exc_name }}</p>{% endif %}
+        {% if exc_msg %}<p><strong>Exception Message:</strong> {{ exc_msg }}</p>{% endif %}
+        {% if traceback %}<h3>Exception Traceback:</h3>
+            <pre>{{ traceback }}</pre>{% endif %}
+    {% endif %}
+
+
+    {% if data %}
+        <div class="ui divider"></div>
+        <h3>API Response:</h3>
+        <pre class="prettyprint">{{ data }}</pre>
+    {% endif %}
+    {% block afterdata %}{% endblock %}
+
+{% endblock %}

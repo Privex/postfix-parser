@@ -6,13 +6,13 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-privex-helpers = "*"
-privex-loghelper = "*"
+privex-helpers = ">=2.14.0"
+privex-loghelper = ">=1.0.6"
 python-dateutil = "*"
 pytz = "*"
-rethinkdb = "*"
+rethinkdb = ">=2.4.7"
 python-dotenv = "*"
-quart = "*"
+quart = ">=0.12.0"
 
 [requires]
-python_version = "3.7"
+python_version = "3.8"

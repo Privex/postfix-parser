@@ -3,6 +3,25 @@
 
 <div id="app">
     <div class="ui segment">
+        <h3>Tips on filtering emails</h3>
+
+        <ul>
+            <li>
+                You can use asterisks ( <code>*</code> ) at the start or end of your query, to match
+                values starting or ending with something. For example <code>*@gmail.com</code> would
+                match all emails ending with <strong>@gmail.com</strong>
+            </li>
+            <li>
+                <code>DEFAULT_LIMIT</code> (amount of emails per page) is currently set to
+                {{ settings.default_limit }}
+            </li>
+            <li>
+                <code>MAX_LIMIT</code> (maximum number for <code>?limit=</code>) is currently set to
+                {{ settings.max_limit }}
+            </li>
+        </ul>
+    </div>
+    <div class="ui segment">
         <div class="ui labeled fluid input">
             <input v-model="search" type="text" class="ui input" placeholder="Search Emails"/>
             <select name="searchby-email" id="searchby-email" v-model="search_by" class="dropdown">
@@ -21,11 +40,14 @@
             <a href="/logout"><button class="ui button red">Log Out</button></a>
         </div>
     </div>
-    <div v-if="loading" class="ui active inverted dimmer">
-        <div class="ui text loader">
+    <Pager v-model="page" :page-count="page_count"></Pager>
+
+    <div v-if="loading" class="ui column twelve wide segment">
+        <div class="ui active inline huge text centered loader">
             Loading emails...
         </div>
     </div>
+
     <table class="ui table" v-if="!loading">
         <thead>
             <tr>
@@ -54,6 +76,10 @@
             {% endraw %}
         </tbody>
     </table>
+
+    <pager v-model="page" :page-count="page_count"></pager>
+
+    <local-settings @settings-loaded="settings_loaded" @settings-saved="settings_saved"></local-settings>
 
     {% raw %}
 
@@ -141,81 +167,42 @@
             crossorigin="anonymous"></script>
     {% endif %}
 
-    <script>
-
-    const base_url = '/api/emails';
-
-    Vue.config.devtools = true;
-
-    let app = new Vue({
-        el: '#app',
-        data: {
-            loading: true,
-            emails: [],
-            search: "",
-            search_by: "id",
-            status_filter: "NOFILTER",
-            msg: {}
-        },
-        computed: {
-            email_filter() {
-                let d = {};
-
-                if (this.search !== "") {
-                    d[this.search_by] = this.search;
-                }
-                if (this.status_filter !== "NOFILTER") {
-                    d['status.code'] = this.status_filter;
-                }
-                return d;
-            }
-        },
-        watch: {
-            search(val) {
-                this.debounce_emails();
-            },
-            search_by(val) {
-                if(this.search !== "") {
-                    this.debounce_emails();
-                }
-            },
-            status_filter(val) {
-                this.debounce_emails();
-            }
-        },
-        methods: {
-            loadEmails() {
-                this.loading = true;
-                var url = base_url, queries = 0;
-
-                for (var f in this.email_filter) {
-                    url += (queries === 0) ? '?' : '&';
-                    url += `${f}=${this.email_filter[f]}`;
-                    queries += 1;
-                }
-                return fetch(url).then(function(response) {
-                    return response.json();
-                }).then((res) => {
-                    this.emails = res;
-                    this.loading = false;
-                });
-            },
-            formatDate(date) {
-                let d = new Date(date);
-                let newdate = `${d.toLocaleString()}`
-            },
-            show_modal(m) {
-                this.msg = m;
-                $('#mail-modal').modal('show');
-            }
-        },
-        mounted() {
-            this.loadEmails();
-            this.debounce_emails = _.debounce(this.loadEmails, 1000);
-            $('select.dropdown').dropdown();
-        }
-    })
-
-
+    {% raw %}
+    <script type="text/x-template" id="template-paginator">
+        <div class="ui buttons">
+            <button class="ui labeled icon button" :class="{disabled: !has_prev}" @click="$emit('input', page - 1);">
+                <i class="left chevron icon"/>Previous Page
+            </button>
+            <button class="ui button disabled">
+                <i class="page icon"/><strong>Page {{ page }} of {{ pageCount }}</strong>
+            </button>
+            <button class="ui right labeled icon button" :class="{disabled: !has_next}"
+                    @click="$emit('input', page + 1);">
+                Next Page <i class="right chevron icon"/>
+            </button>
+        </div>
     </script>
+    <script type="text/x-template" id="template-settings">
+        <div class="ui segment">
+            <h3>Local Settings</h3>
+            <div class="ui form grid">
+                <div class="ui column six wide">
+                    <label>
+                        Maximum results per page:
+                        <input v-model="settings.page_limit" type="number" class="ui input" placeholder="Results per Page"/>
+                    </label>
+                    <hr/>
+                    <button class="ui button primary" @click="saveSettings()">Save Settings</button>
+                </div>
+            </div>
+        </div>
+    </script>
+    {% endraw %}
+
+    <script>
+    Vue.config.devtools = true;
+    </script>
+    <script src="{{ url_for('static', filename='js/pager.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/local_settings.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/email_list.js') }}"></script>
 {% endblock %}

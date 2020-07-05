@@ -4,6 +4,8 @@
     <title>Privex SMTP Mail Info</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.privex.io/lib/semanticui/2.4.2/semantic.min.css"
           integrity="sha384-JKIDqM48bt14NZpzl9v0AP36VK2C/X6RuSPfimxpoWdSANUXblZUX1cgdQw8cZUK" crossorigin="anonymous"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.privex.io/lib/notie/4.3.1/notie.min.css"
+          integrity="sha384-Jv3WSys2uSFeLomz0Yj7cvY3du+3jFXWOn97+UCbEUTTTQX8ljqok72pu03WznpC" crossorigin="anonymous"/>
     <style>
         .main {margin-top: 1em;}
 
@@ -16,6 +18,21 @@
             }
         }
     </style>
+
+    <script src="https://cdn.privex.io/lib/notie/4.3.1/notie.min.js"
+            integrity="sha384-Ulw8y0TpoFZw3cNSRM88s1+p9O/TL6qMFIzDn9Bs+qETYhMp0UwMiv+vCylRfZVI"
+            crossorigin="anonymous" async></script>
+    <script src="https://cdn.privex.io/lib/jquery/3.3.1/jquery.min.js"
+            integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT"
+            crossorigin="anonymous" async></script>
+    <script src="https://cdn.privex.io/lib/semanticui/2.4.2/semantic.min.js"
+            integrity="sha384-yvMKoOb78htxD1Bp6oo2tsnFh4lwwz+621kAp2m8YeFkSe9CM2+N1coOvw4R0uwt"
+            crossorigin="anonymous" async></script>
+
+
+    {% block head_scripts %}
+    {% endblock %}
+
 </head>
 <body>
     <div class="ui main fluid container">
@@ -35,12 +52,8 @@
     </div>
 
 
-    <script src="https://cdn.privex.io/lib/jquery/3.3.1/jquery.min.js"
-            integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.privex.io/lib/semanticui/2.4.2/semantic.min.js"
-            integrity="sha384-yvMKoOb78htxD1Bp6oo2tsnFh4lwwz+621kAp2m8YeFkSe9CM2+N1coOvw4R0uwt"
-            crossorigin="anonymous"></script>
+
+
 
     {% block scripts %}
     {% endblock %}
