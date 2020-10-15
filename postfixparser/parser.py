@@ -17,8 +17,8 @@ Copyright::
 """
 import re
 
-find_to = re.compile(r'.*to=<([a-zA-Z0-9-_.]+@[a-zA-Z0-9-_.]+)>')
-find_from = re.compile(r'.*from=<([a-zA-Z0-9-_.]+@[a-zA-Z0-9-_.]+)>')
+find_to = re.compile(r'.*to=<([a-zA-Z0-9-_.+]+@[a-zA-Z0-9-_.]+)>')
+find_from = re.compile(r'.*from=<([a-zA-Z0-9-_.+]+@[a-zA-Z0-9-_.]+)>')
 find_message_id = re.compile(r'.*message-id=<(.*)>')
 find_status = re.compile(r'.*status=([a-zA-Z0-9-_.]+) (.*)?')
 find_relay = re.compile(r'.*relay=([a-zA-Z0-9-._]+)\[(.*)\]:([0-9]+)')
