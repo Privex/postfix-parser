@@ -24,7 +24,8 @@ from typing import Tuple, List, Union
 
 from privex.helpers import empty
 from quart import request
-from quart.exceptions import BadRequest
+# from quart.exceptions import BadRequest
+from werkzeug.exceptions import BadRequest
 from rethinkdb import RethinkDB
 from rethinkdb.ast import DB
 from rethinkdb.net import DefaultConnection
