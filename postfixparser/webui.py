@@ -157,7 +157,7 @@ async def api_emails():
     _sm = await _process_filters(query=_sm, frm=frm)
 
     _sm, res = await _paginate_query(_sm, frm, rt_conn=conn, rt_query=r_q, order_by=order_by, order_dir=order_dir)
-    _sm = await _sm.run(conn)
+    _sm = await _sm.run(conn, array_limit=10000000)
 
     sm = []
     if type(_sm) is list:
@@ -197,7 +197,7 @@ async def _paginate_query(query: QueryOrTable, frm: Mapping, rt_conn: DefaultCon
     # if order_by in dict(settings.rethink_tables)['sent_mail']:
     #     _sm = _sm.order_by(index=r_order)
     # else:
-    query = query.order_by(r_order).skip(offset).limit(limit)
+    query = query.order_by(index=r_order).skip(offset).limit(limit)
     return query, res
 
 
