@@ -39,6 +39,8 @@ Table = rethinkdb.query.ast.Table
 RqlQuery = rethinkdb.query.ast.RqlQuery
 QueryOrTable = Union[Table, RqlQuery]
 
+skip_keys = ['limit', 'offset', 'page']
+
 
 @app.route('/', methods=['GET'])
 async def index():
@@ -197,15 +199,17 @@ async def _paginate_query(query: QueryOrTable, frm: Mapping, rt_conn: DefaultCon
     # if order_by in dict(settings.rethink_tables)['sent_mail']:
     #     _sm = _sm.order_by(index=r_order)
     # else:
-    query = query.order_by(index=r_order).skip(offset).limit(limit)
+    if empty(frm.keys() - skip_keys, itr=True):
+        query = query.order_by(index=r_order)
+    else:
+        query = query.order_by(r_order)
+    query = query.skip(offset).limit(limit)
     return query, res
 
 
-async def _process_filters(query: QueryOrTable, frm: Mapping, skip_keys: List[str] = None) -> QueryOrTable:
+async def _process_filters(query: QueryOrTable, frm: Mapping) -> QueryOrTable:
     if empty(frm, itr=True):
         return query
-    
-    skip_keys = ['limit', 'offset', 'page'] if not skip_keys else skip_keys
     
     for fkey, fval in frm.items():
         if fkey in skip_keys:
